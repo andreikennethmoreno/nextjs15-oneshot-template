@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 
 const geistSans = Geist({
@@ -28,29 +29,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="min-h-screen">
-            <Navbar />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="min-h-screen">
+              <Navbar />
 
-            <main className="py-8">
-              {/* container to center the content */}
-              <div className="max-w-7xl mx-auto px-4">
-                <div>{children}</div>
-              </div>
-            </main>
-          </div>
-          <ToastContainer position="top-right" autoClose={3000} />
-        </ThemeProvider>
-      </body>
-    </html>
+              <main className="py-8">
+                {/* container to center the content */}
+                <div className="max-w-7xl mx-auto px-4">
+                  <div>{children}</div>
+                </div>
+              </main>
+            </div>
+            <ToastContainer position="top-right" autoClose={3000} />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
